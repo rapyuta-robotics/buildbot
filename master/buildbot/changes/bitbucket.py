@@ -14,7 +14,11 @@
 # Copyright Buildbot Team Members
 
 import time
-import sys, getpass, base64
+import sys, getpass, base64, os.path
+import urllib2
+import urllib
+import base64
+import simplejson
 from datetime import datetime
 
 from twisted.internet import defer
