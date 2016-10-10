@@ -87,31 +87,7 @@ class BitbucketStatusPush(http.HttpStatusPushBase):
 
         for sourcestamp in build['buildset']['sourcestamps']:
             sha = sourcestamp['revision']
-            print("Sending SHA:" + sha)
             owner, repo = self.get_owner_and_repo(sourcestamp['repository'])
-            # oauth_request = yield self.session.post(self._oauth_url,
-            #                                         auth=self._auth,
-            #                                         data=_GET_TOKEN_DATA)
-            # if oauth_request.status_code == 200:
-            #     token = json.loads(oauth_request.content)['access_token']
-            # else:
-            #     token = ''
-
-            # self.session.headers.update({'Authorization': 'Bearer ' + token})
-
-            # bitbucket_uri = '/'.join([self._base_url, owner, repo, 'commit', sha, 'statuses', 'build'])
-
-            # response = yield self.session.post(bitbucket_uri, json=body)
-            # if response.status_code != 201:
-            #     log.msg("%s: unable to upload Bitbucket status: %s" %
-            #             (response.status_code, response.content))
-            repo_slug = owner + "/" + repo
-            print("lomis:repo_slug: " + repo_slug)
-            print("lomis:sha: " + sha)
-            print("lomis:status" + status)
-            print("lomis: key" + build['builder']['name'])
-            #callStatus = apiWrapper.postCommitBuildStatus(repo_slug, sha, status,
-            #    build['builder']['name'], build.get('url', "www.foo.com"))
             self._postToBuildStatus(owner, repo, sha, status, build['builder']['name'],
                                     build.get('url', "www.foo.com")) #url can't be empty
 
