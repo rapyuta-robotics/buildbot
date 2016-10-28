@@ -59,6 +59,16 @@ def getDetailsForBuildset(master, bsid, wantProperties=False, wantSteps=False,
 
     defer.returnValue(dict(buildset=buildset, builds=builds))
 
+@defer.inlineCallbacks
+def getDetailsForBuild(master, build, wantProperties=False, wantSteps=False,
+                       wantPreviousBuild=False, wantLogs=False):
+    buildrequest = yield master.data.get(("buildrequests", build['buildrequestid']))
+    buildset = yield master.data.get(("buildsets", buildrequest['buildsetid']))
+    build['buildrequest'], build['buildset'] = buildrequest, buildset
+    ret = yield getDetailsForBuilds(master, buildset, [build],
+                                    wantProperties=wantProperties, wantSteps=wantSteps,
+                                    wantPreviousBuild=wantPreviousBuild, wantLogs=wantLogs)
+    raise defer.returnValue(ret)
 
 @defer.inlineCallbacks
 def getDetailsForBuilds(master, buildset, builds, wantProperties=False, wantSteps=False,

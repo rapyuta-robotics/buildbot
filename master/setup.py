@@ -296,7 +296,8 @@ setup_args = {
             ('buildbot.reporters.mail', ['MailNotifier']),
             ('buildbot.reporters.gerrit', ['GerritStatusPush']),
             ('buildbot.reporters.irc', ['IRC']),
-
+            ('buildbot.reporters.http', ['HttpStatusPush']),
+            ('buildbot.reporters.bitbucket', ['BitbucketStatusPush'])
         ]),
         ('buildbot.util', [
             # Connection seems to be a way too generic name, though
